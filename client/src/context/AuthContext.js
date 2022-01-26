@@ -11,15 +11,17 @@ const INITIAL_STATE = {
 // Context
 export const AuthContext = createContext(INITIAL_STATE);
 
+// Wrapper
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AuthContext, INITIAL_STATE);
+  // Use Reducer
+  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
   return (
     <AuthContext.Provider
-      values={{
+      value={{
         user: state.user,
         isFetching: state.isFetching,
-        error: state.err,
+        error: state.error,
         dispatch,
       }}
     >
