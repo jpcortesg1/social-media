@@ -4,12 +4,24 @@ import Online from "../online/Online";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AuthContext } from "./../../context/AuthContext";
+import { Add, Remove } from "@material-ui/icons";
+import { useContext } from "react";
 
 export default function Rightbar({ user }) {
   // Public folder
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  // Friends of user the profile
   const [friends, setFriends] = useState([]);
+
+  // Current user
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+
+  // Current user follow user
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
+  );
 
   // To reload friends of actual user
   useEffect(() => {
@@ -21,8 +33,31 @@ export default function Rightbar({ user }) {
         }
       } catch (error) {}
     };
-    getFriends();
-  }, [user._id]);
+    if (user) getFriends();
+  }, [user]);
+
+  useEffect(() => {
+    setFollowed(currentUser.followings.includes(user?._id));
+  }, [currentUser.followings, user]);
+
+  const handleClick = async () => {
+    try {
+      if (followed) {
+        await axios.put("/users/" + user._id + "/unfollow", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await axios.put("/users/" + user._id + "/follow", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setFollowed(!followed);
+  };
 
   const HomeRightbar = () => {
     return (
@@ -47,6 +82,12 @@ export default function Rightbar({ user }) {
   const ProfileRightbar = () => {
     return (
       <>
+        {user.username !== currentUser.username && (
+          <button className="buttonrightbarFollowButton" onClick={handleClick}>
+            {followed ? "Unfollow" : "Follow"}
+            {followed ? <Remove /> : <Add />}
+          </button>
+        )}
         <h4 className="rightbarTitleProfile">User Information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
