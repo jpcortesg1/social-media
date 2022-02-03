@@ -75,7 +75,10 @@ export default function Register() {
               Sign Up
             </button>
             <span className="registerForgot">Forgot Password?</span>
-            <Link to="/login" style={{ textDecoration: "none" }}>
+            <Link
+              to="/login"
+              style={{ textDecoration: "none", textAlign: "center" }}
+            >
               <button className="registerButton registerButtonRegister">
                 Log Into Account
               </button>
