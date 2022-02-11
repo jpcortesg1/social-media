@@ -11,6 +11,8 @@ const path = require("path");
 const usersRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
+const conversationRoute = require("./routes/conversation");
+const messageRoute = require("./routes/message");
 
 dotenv.config();
 
@@ -54,6 +56,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/conversation", conversationRoute);
+app.use("/api/message", messageRoute);
 
 app.listen(8800, () => {
   console.log("Backend server is running!");
