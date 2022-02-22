@@ -1,17 +1,35 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { format } from "timeago.js";
 import "./message.css";
 
-export default function Message({ own }) {
+export default function Message({ own, message }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios("/users?userId=" + message.sender);
+        setUser(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, [message]);
+
+  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
+  const picture = user?.profilePicture
+    ? user.profilePicture
+    : "person/noAvatar.png";
+
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
-        <img
-          className="messageImg"
-          src="https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_960_720.jpg"
-          alt=""
-        />
-        <p className="messageText">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+        <img className="messageImg" src={pf + picture} alt="" />
+        <p className="messageText">{message.text}</p>
       </div>
-      <div className="messageBottom">1 hour ago</div>
+      <div className="messageBottom">{format(message.createdAt)}</div>
     </div>
   );
 }

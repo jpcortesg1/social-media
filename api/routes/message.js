@@ -14,15 +14,15 @@ router.post("/", async (req, res) => {
 });
 
 // Get message
-router.get("/", async (req, res) => {
+router.get("/:conversationId", async (req, res) => {
   try {
     const messages = await Message.find({
-      conversationId: req.body.conversationId
-    })
+      conversationId: req.params.conversationId,
+    });
     res.status(200).json(messages);
   } catch (error) {
-    res.status(500).json(error); 
+    res.status(500).json(error);
   }
-})
+});
 
 module.exports = router;
