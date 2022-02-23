@@ -5,17 +5,42 @@ import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { io } from "socket.io-client";
 import "./messenger.css";
 
 export default function Messenger() {
+  // Save all conversations of current user
   const [conversations, setConversations] = useState([]);
+  // When change of conversation
   const [currentChat, setCurrentChat] = useState(null);
+  // Save all messages of selected conversation
   const [messages, setMessagess] = useState([]);
+  // Save the value of textarea
   const [newMessage, setNewMessage] = useState("");
-  const newMessage1 = useRef();
+
+  // User of session
   const { user } = useContext(AuthContext);
+
+  // Reference of new message
+  const newMessage1 = useRef();
+  // Socket
+  const socket = useRef();
+  // To referencer last message
   const scrollRef = useRef();
 
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  // Add current user and socketId to users in server socket
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
+
+  // Get all conversations of user in session
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -28,6 +53,7 @@ export default function Messenger() {
     getConversations();
   }, [user]);
 
+  // Get messages of conversation selected
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -40,6 +66,7 @@ export default function Messenger() {
     getMessages();
   }, [currentChat]);
 
+  // Save in db the new message
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
@@ -50,7 +77,7 @@ export default function Messenger() {
 
     try {
       const res = await axios.post("/message", message);
-      setMessagess([...messages, res.data]);
+      setMessagess([...messages, res.data]); // Add new message to screen
       setNewMessage("");
       newMessage1.current.value = "";
     } catch (error) {
@@ -58,6 +85,7 @@ export default function Messenger() {
     }
   };
 
+  // Allways see the last message in the conversation
   useEffect(() => {
     scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
