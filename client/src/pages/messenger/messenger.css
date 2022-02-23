@@ -1,10 +1,11 @@
 .messenger {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 50px);
   display: flex;
 }
 
 .chatMenu {
-  flex: 3.5;
+  flex: 3;
+  border-right: 1px solid rgba(128, 128, 128, 0.473);
 }
 
 .chatMenuInput {
@@ -12,6 +13,7 @@
   padding: 10px 0;
   border: none;
   border-bottom: 1px solid gray;
+  outline: none;
 }
 
 .chatBox {
@@ -55,8 +57,9 @@
   color: white;
 }
 
-.chatOnline {
+.chatOnline1 {
   flex: 3;
+  border-left: 1px solid rgba(128, 128, 128, 0.473);
 }
 
 .chatMenuWrapper,

@@ -1,19 +1,20 @@
-import "./messenger.css";
+import { useContext, useState, useEffect, useRef } from "react";
 import Topbar from "./../../components/topbar/Topbar";
 import Conversation from "../../components/conversation/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext, useState } from "react";
-import { useEffect } from "react";
 import axios from "axios";
+import "./messenger.css";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([]);
-
+  const [messages, setMessagess] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const newMessage1 = useRef();
   const { user } = useContext(AuthContext);
+  const scrollRef = useRef();
 
   useEffect(() => {
     const getConversations = async () => {
@@ -31,13 +32,35 @@ export default function Messenger() {
     const getMessages = async () => {
       try {
         const res = await axios.get("/message/" + currentChat?._id);
-        setMessages(res.data);
+        setMessagess(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     getMessages();
   }, [currentChat]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+
+    try {
+      const res = await axios.post("/message", message);
+      setMessagess([...messages, res.data]);
+      setNewMessage("");
+      newMessage1.current.value = "";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <>
@@ -68,19 +91,21 @@ export default function Messenger() {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
-                    <Message
-                      key={m._id}
-                      own={m.sender === user._id}
-                      message={m}
-                    />
+                    <div key={m._id} ref={scrollRef}>
+                      <Message own={m.sender === user._id} message={m} />
+                    </div>
                   ))}
                 </div>
                 <div className="chatBoxBottom">
                   <textarea
                     className="chatMessageInput"
                     placeholder="Write something..."
+                    ref={newMessage1}
+                    onChange={(e) => setNewMessage(e.target.value)}
                   ></textarea>
-                  <button className="chatSubmitButton">Send</button>
+                  <button onClick={handleSubmit} className="chatSubmitButton">
+                    Send
+                  </button>
                 </div>
               </>
             ) : (
@@ -90,7 +115,7 @@ export default function Messenger() {
             )}
           </div>
         </div>
-        <div className="chatOnline">
+        <div className="chatOnline1">
           <div className="chatOnlineWrapper">
             <ChatOnline />
           </div>
