@@ -17,6 +17,8 @@ export default function Messenger() {
   const [messages, setMessagess] = useState([]);
   // Save the value of textarea
   const [newMessage, setNewMessage] = useState("");
+  // Message of sender user
+  const [arriveMessage, setArriveMessage] = useState(null);
 
   // User of session
   const { user } = useContext(AuthContext);
@@ -28,9 +30,24 @@ export default function Messenger() {
   // To referencer last message
   const scrollRef = useRef();
 
+  // Connect with socket and receive new Message
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArriveMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
   }, []);
+
+  // Add message only in the correct conversation
+  useEffect(() => {
+    arriveMessage &&
+      currentChat?.members.includes(arriveMessage.sender) &&
+      setMessagess((prev) => [...prev, arriveMessage]);
+  }, [arriveMessage, currentChat]);
 
   // Add current user and socketId to users in server socket
   useEffect(() => {
@@ -66,8 +83,9 @@ export default function Messenger() {
     getMessages();
   }, [currentChat]);
 
-  // Save in db the new message
+  // Save in db the new message and send message to receiver user
   const handleSubmit = async (e) => {
+    // Create new message to save in db
     e.preventDefault();
     const message = {
       sender: user._id,
@@ -75,6 +93,19 @@ export default function Messenger() {
       conversationId: currentChat._id,
     };
 
+    // Find the user that received the message
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+
+    // Send to socket the request to show the new Message in the chat of receiver user
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId: receiverId,
+      text: newMessage,
+    });
+
+    // Save message and update the messages in the screen
     try {
       const res = await axios.post("/message", message);
       setMessagess([...messages, res.data]); // Add new message to screen
