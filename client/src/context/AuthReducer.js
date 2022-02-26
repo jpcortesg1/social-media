@@ -22,6 +22,13 @@ const AuthReducer = (state, action) => {
       };
 
     case "FOLLOW":
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...state.user,
+          followings: [...state.user.followings, action.payload],
+        })
+      );
       return {
         ...state,
         user: {
@@ -31,6 +38,15 @@ const AuthReducer = (state, action) => {
       };
 
     case "UNFOLLOW":
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...state.user,
+          followings: state.user.followings.filter(
+            (idUser) => idUser !== action.payload
+          ),
+        })
+      );
       return {
         ...state,
         user: {

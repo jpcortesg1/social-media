@@ -53,10 +53,10 @@ export default function Rightbar({ user }) {
         });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
+      setFollowed(!followed);
     } catch (error) {
       console.log(error);
     }
-    setFollowed(!followed);
   };
 
   const HomeRightbar = () => {
