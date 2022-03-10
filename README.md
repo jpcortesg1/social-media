@@ -25,18 +25,18 @@ Context was used for user management, with good practices. Hooks such as useStat
 
 
 1. Clone or download the repository.
-2. Into folder api run
-   create .env file and add url to mongo.
-   $ npm install
-   $ npm run start
-3. Into folder socket run
-   add port of react in socket
-   $ npm install
-   $ npm run start
-4. Into folder client run
-   $ npm install
-   in packege.json set proxy to port api
-   $ npm run start
+2. Into folder api run:
+   * create .env file and add url to mongo.
+   * $ npm install
+   * $ npm run start
+3. Into folder socket run:
+   * add port of react in socket
+   * $ npm install
+   * $ npm run start
+4. Into folder client run:
+   * $ npm install
+   * In packege.json set proxy to port api
+   * $ npm run start
 
 
 <h3 align="center">What to do.</h3>
