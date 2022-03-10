@@ -23,7 +23,7 @@ Context was used for user management, with good practices. Hooks such as useStat
 
 <h3 align="center">Install</h3>
 
-<p align="center">
+
 1. Clone or download the repository.
 2. Into folder api run
    create .env file and add url to mongo.
@@ -37,7 +37,7 @@ Context was used for user management, with good practices. Hooks such as useStat
    $ npm install
    in packege.json set proxy to port api
    $ npm run start
-</p>
+
 
 <h3 align="center">What to do.</h3>
 
