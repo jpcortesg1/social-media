@@ -11,7 +11,7 @@ Hi there, I'm <a href="https://github.com/jpcortesg1">Juan Pablo</a> 😃.
 
 <h3 align="center">Description.</h3>
 
-<p align="center">
+
 This project is a small copy with limited features that resemble facebook. It is created with Node.js React.js, socket.io and mongodb. is a MERN Stack.
 The application has the main functions:
 * Such as register, login (the user is saved in localstorage).
@@ -19,7 +19,7 @@ The application has the main functions:
 * Look at the profile with all info of a user.
 * The application has a real-time chat with socket.io with which people can communicate with each other.
 Context was used for user management, with good practices. Hooks such as useState, useEffect, useRef, etc. are also used.
-</p>
+
 
 <h3 align="center">Install</h3>
 
