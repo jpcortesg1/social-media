@@ -46,12 +46,13 @@ In the application you can create an account, start on it, create new posts, rea
 </p>
 
 <h3 align="center">Credits.</h3>
-<p align="center">
+
 This project is learning thanks to lamadev, a youtuber who shares his knowledge.
+
 <a href="https://www.instagram.com/lamawebdev"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white"></a>
 <a href="https://www.facebook.com/groups/lamadev"><img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white"></a>
 <a href="https://discord.gg/yKremu4mPr"><img src="https://img.shields.io/badge/%3CServer%3E-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white"></a>
-</p>
+
 
 I want to show my skills as a junior programmer by showing this project. In it you can notice how is my way of programming, the resources I know and how I do my work.
 
