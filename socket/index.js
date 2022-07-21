@@ -1,5 +1,10 @@
+// Config to deploy
+const dotenv = require("dotenv");
+dotenv.config();
+const port = process.env.PORT;
+
 // Create server and with who connected
-const io = require("socket.io")(8900, {
+const io = require("socket.io")(port, {
   cors: {
     origin: "http://localhost:3000",
   },
