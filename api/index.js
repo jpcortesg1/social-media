@@ -58,6 +58,13 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/conversation", conversationRoute);
 app.use("/api/message", messageRoute);
+app.get("/", (req, res) => {
+  try {
+    res.status(200).json("All Right");
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
 
 const port = process.env.PORT;
 
