@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 const mongoose = require("mongoose");
@@ -29,6 +30,7 @@ mongoose
   });
 
 // Middleware
+app.use(cors())
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(helmet());
