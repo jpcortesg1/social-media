@@ -11,7 +11,9 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   // Get friends
   useEffect(() => {
     const getUsers = async () => {
-      const res = await axios.get("/users/friends/" + currentId);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/users/friends/` + currentId
+      );
       setFriends(res.data);
     };
     getUsers();
@@ -28,9 +30,11 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   const handleClick = async (user) => {
     try {
-      let res = await axios.get(`/conversation/find/${currentId}/${user._id}/`);
+      let res = await axios.get(
+        `${process.env.REACT_APP_API}/conversation/find/${currentId}/${user._id}/`
+      );
       if (!res.data) {
-        res = await axios.post("/conversation", {
+        res = await axios.post(`${process.env.REACT_APP_API}/conversation`, {
           senderId: currentId,
           receiverId: user._id,
         });

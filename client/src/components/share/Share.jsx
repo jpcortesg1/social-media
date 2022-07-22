@@ -40,14 +40,14 @@ export default function Share() {
       newPost.img = fileName;
 
       try {
-        await axios.post("/upload", data);
+        await axios.post(`${process.env.REACT_APP_API}/upload`, data);
       } catch (error) {
         console.log(error);
       }
     }
 
     try {
-      await axios.post("/posts", newPost);
+      await axios.post(`${process.env.REACT_APP_API}/posts`, newPost);
       window.location.reload();
     } catch (error) {}
   };

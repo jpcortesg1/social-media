@@ -9,7 +9,9 @@ export default function Message({ own, message }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios("/users?userId=" + message.sender);
+        const res = await axios(
+          `${process.env.REACT_APP_API}/users?userId=` + message.sender
+        );
         setUser(res.data);
       } catch (error) {
         console.log(error);

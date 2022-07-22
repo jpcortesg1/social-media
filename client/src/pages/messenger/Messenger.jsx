@@ -34,7 +34,7 @@ export default function Messenger() {
 
   // Connect with socket and receive new Message
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io(process.env.REACT_APP_SOCKET);
     socket.current.on("getMessage", (data) => {
       setArriveMessage({
         sender: data.senderId,
@@ -65,7 +65,9 @@ export default function Messenger() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get("/conversation/" + user._id);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API}/conversation/` + user._id
+        );
         setConversations(res.data);
       } catch (error) {
         console.log(error);
@@ -78,7 +80,9 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/message/" + currentChat?._id);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API}/message/` + currentChat?._id
+        );
         setMessagess(res.data);
       } catch (error) {
         console.log(error);
@@ -111,7 +115,10 @@ export default function Messenger() {
 
     // Save message and update the messages in the screen
     try {
-      const res = await axios.post("/message", message);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/message`,
+        message
+      );
       setMessagess([...messages, res.data]); // Add new message to screen
       setNewMessage("");
       newMessage1.current.value = "";

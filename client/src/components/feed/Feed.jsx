@@ -16,8 +16,12 @@ export default function Feed({ username }) {
     const fetchPosts = async () => {
       // If this page is username
       const res = username
-        ? await axios.get(`/posts/profile/${username}`)
-        : await axios.get("/posts/timeline/" + user._id);
+        ? await axios.get(
+            `${process.env.REACT_APP_API}/posts/profile/${username}`
+          )
+        : await axios.get(
+            `${process.env.REACT_APP_API}/posts/timeline/` + user._id
+          );
       const { data } = res;
       // Update all posts in order
       setPosts(
@@ -33,7 +37,7 @@ export default function Feed({ username }) {
     <div className="feed">
       <div className="feedWrapper">
         {username ? username === user.username && <Share /> : <Share />}
-        
+
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

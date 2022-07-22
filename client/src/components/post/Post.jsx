@@ -27,7 +27,9 @@ export default function Post({ post }) {
   useEffect(() => {
     // Api request to user
     const fetchUser = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/users?userId=${post.userId}`
+      );
       const { data } = res;
       // User of this post
       setUser(data);
@@ -38,7 +40,7 @@ export default function Post({ post }) {
   // Change status of like
   const likeHandler = () => {
     try {
-      axios.put(`/posts/${post._id}/like`, {
+      axios.put(`${process.env.REACT_APP_API}/posts/${post._id}/like`, {
         userId: currentUser._id,
       });
     } catch (error) {}
