@@ -28,7 +28,7 @@ export default function Post({ post }) {
     // Api request to user
     const fetchUser = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API}/users?userId=${post.userId}`
+        `${process.env.REACT_APP_API}/api/users?userId=${post.userId}`
       );
       const { data } = res;
       // User of this post
@@ -40,7 +40,7 @@ export default function Post({ post }) {
   // Change status of like
   const likeHandler = () => {
     try {
-      axios.put(`${process.env.REACT_APP_API}/posts/${post._id}/like`, {
+      axios.put(`${process.env.REACT_APP_API}/api/posts/${post._id}/like`, {
         userId: currentUser._id,
       });
     } catch (error) {}

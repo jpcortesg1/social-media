@@ -66,7 +66,7 @@ export default function Messenger() {
     const getConversations = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API}/conversation/` + user._id
+          `${process.env.REACT_APP_API}/api/conversation/` + user._id
         );
         setConversations(res.data);
       } catch (error) {
@@ -81,7 +81,7 @@ export default function Messenger() {
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API}/message/` + currentChat?._id
+          `${process.env.REACT_APP_API}/api/message/` + currentChat?._id
         );
         setMessagess(res.data);
       } catch (error) {
@@ -116,7 +116,7 @@ export default function Messenger() {
     // Save message and update the messages in the screen
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/message`,
+        `${process.env.REACT_APP_API}/api/message`,
         message
       );
       setMessagess([...messages, res.data]); // Add new message to screen

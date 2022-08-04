@@ -29,7 +29,7 @@ export default function Rightbar({ user }) {
       try {
         if (user._id) {
           const friendList = await axios.get(
-            `${process.env.REACT_APP_API}/users/friends/` + user._id
+            `${process.env.REACT_APP_API}/api/users/friends/` + user._id
           );
           setFriends(friendList.data);
         }
@@ -46,7 +46,7 @@ export default function Rightbar({ user }) {
     try {
       if (followed) {
         await axios.put(
-          `${process.env.REACT_APP_API}/users/` + user._id + "/unfollow",
+          `${process.env.REACT_APP_API}/api/users/` + user._id + "/unfollow",
           {
             userId: currentUser._id,
           }
@@ -54,7 +54,7 @@ export default function Rightbar({ user }) {
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(
-          `${process.env.REACT_APP_API}/users/` + user._id + "/follow",
+          `${process.env.REACT_APP_API}/api/users/` + user._id + "/follow",
           {
             userId: currentUser._id,
           }

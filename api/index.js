@@ -30,8 +30,9 @@ mongoose
   });
 
 // Middleware
-app.use(cors())
+app.use(cors());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
@@ -60,13 +61,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/conversation", conversationRoute);
 app.use("/api/message", messageRoute);
-app.get("/", (req, res) => {
-  try {
-    res.status(200).json("All Right");
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-});
 
 const port = process.env.PORT;
 

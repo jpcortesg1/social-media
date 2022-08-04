@@ -17,10 +17,10 @@ export default function Feed({ username }) {
       // If this page is username
       const res = username
         ? await axios.get(
-            `${process.env.REACT_APP_API}/posts/profile/${username}`
+            `${process.env.REACT_APP_API}/api/posts/profile/${username}`
           )
         : await axios.get(
-            `${process.env.REACT_APP_API}/posts/timeline/` + user._id
+            `${process.env.REACT_APP_API}/api/posts/timeline/` + user._id
           );
       const { data } = res;
       // Update all posts in order

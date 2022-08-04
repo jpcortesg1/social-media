@@ -10,7 +10,7 @@ export default function Message({ own, message }) {
     const getUser = async () => {
       try {
         const res = await axios(
-          `${process.env.REACT_APP_API}/users?userId=` + message.sender
+          `${process.env.REACT_APP_API}/api/users?userId=` + message.sender
         );
         setUser(res.data);
       } catch (error) {
